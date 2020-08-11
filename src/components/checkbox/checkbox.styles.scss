@@ -1,0 +1,30 @@
+.form-check{
+    margin-left: 25px;
+    display: block;
+    
+
+//   label{
+//     display: block;
+//      cursor: pointer;
+//   }
+
+
+label {
+    display: inline-block;
+  
+  }
+ input{
+     display:block;
+    text-align:left;
+  }
+
+  label:hover{
+      background-color:linen;
+      text-decoration:underline;
+  }
+
+  
+
+
+
+}
