@@ -5,7 +5,7 @@ import Checkbox from "../checkbox/checkbox.component";
 
 import './form-joinus.styles.scss';
 
-const CATEGORIES= ["women", "men", "unisex", "kids", "home", "self-care & wellness",
+const CATEGORIES= ["women", "men", "unisex", "kids", "home", "self-care", "wellness",
 "beauty", "jewelry", "shoes", "masks", "accessories", "undergarments", "vintage", "fair-trade", "eco-friendly", "sustainable"];
 
 const PRICERANGES = ["$ - $0-50", "$$ - $50-100", "$$$ - $100-150", "$$$$ - $150+"]
@@ -40,8 +40,21 @@ class JoinUs extends React.Component {
     }
 
     handleSubmit(event){
+        //event.preventDefault();
+
+        fetch('http://localhost:5000/results', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        }).then(function(response){
+            console.log(response)
+            return response.json();
+        });
+
         event.preventDefault();
-        console.log(this.state);
+        //console.log(this.state);
     }
 
     handleSelect(event) {
@@ -63,7 +76,6 @@ class JoinUs extends React.Component {
           }
         }));
       }
-
 
       createCheckbox = option => (
           <Checkbox 
@@ -90,7 +102,9 @@ class JoinUs extends React.Component {
     render(){
         return(
           <div className='join-us'>
-             <form onSubmit={this.handleSubmit}>
+             <form onSubmit={this.handleSubmit} 
+             action="http://localhost:5000/results" method="post"
+             >
                  <h1>Have a shop? Join Us!</h1>
                  <label>
                     Owner Name
@@ -169,13 +183,13 @@ class JoinUs extends React.Component {
                 <label>
                     Product Categories  
                     </label>
-                    <span> select all that applies </span>
+                    <span> (check all that applies) </span>
                 {this.createCheckboxes()}
                 <br></br>
                 <label>
                     Price Ranges  
                     </label>
-                    <span> select all that applies </span>
+                    <span> (check all that applies) </span>
                 {this.createCheckboxesPrices()}
                 <br></br>
                 <input type="submit" value="Submit"/>

@@ -6,8 +6,8 @@
         text-align: center;
     }
     form{
-        margin: 0 auto;
-        padding: 3%;
+        margin: 0px auto;
+        padding: 10px;
         border: 5px solid white;
         max-width: 500px;
         overflow: hidden;
@@ -19,12 +19,12 @@
         display: inline-flex;
     }
 
-    input, select, textarea {
+    input[type=text], input[type=email],select, textarea {
         border:none;
         border-radius: 4px;
         margin: 0 auto;
         resize: vertical;
-        width: 100%;
+        width: 95%;
         padding: 10px;
         display:flex;
         flex-direction: column;
@@ -42,6 +42,8 @@
     }
 
 
-
+    input[type=submit]{
+display: block;
+margin: 0 auto;    }
 
 }
