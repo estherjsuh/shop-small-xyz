@@ -6,7 +6,7 @@ import Checkbox from "../checkbox/checkbox.component";
 import './form-joinus.styles.scss';
 
 const CATEGORIES= ["women", "men", "unisex", "kids", "home", "self-care & wellness",
-"beauty", "jewelry", "shoes", "masks", "accessories", "undergarments", "vintage", "fair-trade", "eco-friendly", "sustainable"];
+"beauty", "jewelry", "shoes", "masks", "bags & accessories", "undergarments", "vintage", "fair-trade", "eco-friendly", "sustainable"];
 
 const PRICERANGES = ["$ - $0-50", "$$ - $50-100", "$$$ - $100-150", "$$$$ - $150+"]
 

@@ -19,11 +19,16 @@ db = SQLAlchemy(app)
 def get_current_time():
     return {'time': time.time()}
 
+
+@app.route('/')
+def homepage():
+    return render_template('homepage.html')
+
 @app.route('/results', methods=['POST'])
 def api_post():
     if request.method == 'POST':
         req = request.json
-        new_store = Store(req['ownerName'], req['email'], req['shopName'], req['website'], req['nearestLocation'], req['msgFromOwner'], req['categories']['women'], req['categories']['men'], req['categories']['unisex'], req['categories']['kids'], req['categories']['home'], req['categories']['self-care & wellness'], req['categories']['beauty'], req['categories']['jewelry'], req['categories']['shoes'], req['categories']['masks'], req['categories']['accessories'], req['categories']['undergarments'], req['categories']['vintage'], req['categories']['fair-trade'], req['categories']['eco-friendly'], req['categories']['sustainable'], req['prices']['$ - $0-50'], req['prices']['$$ - $50-100'], req['prices']['$$$ - $100-150'], req['prices']['$$$$ - $150+'])
+        new_store = Store(req['ownerName'], req['email'], req['shopName'], req['website'], req['nearestLocation'], req['msgFromOwner'], req['categories']['women'], req['categories']['men'], req['categories']['unisex'], req['categories']['kids'], req['categories']['home'], req['categories']['self-care & wellness'], req['categories']['beauty'], req['categories']['jewelry'], req['categories']['shoes'], req['categories']['masks'], req['categories']['bags & accessories'], req['categories']['undergarments'], req['categories']['vintage'], req['categories']['fair-trade'], req['categories']['eco-friendly'], req['categories']['sustainable'], req['prices']['$ - $0-50'], req['prices']['$$ - $50-100'], req['prices']['$$$ - $100-150'], req['prices']['$$$$ - $150+'])
         db.session.add(new_store)
         db.session.commit()
         return jsonify(req)
@@ -36,7 +41,9 @@ class Store(db.Model):
 
     store_id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
     approved = db.Column(db.Boolean, default=False)
+    #declined = db.Column(db.Boolean, default=False)
 
     ownerName = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
@@ -99,3 +106,17 @@ def pending_stores():
     return render_template('pending_stores.html', stores=all_stores, categories =["women", "men", "unisex", "kids", "home", "selfcare_wellness", "beauty", "jewelry", "shoes", "masks", 
             "accessories", "undergarments", "vintage", "fairtrade", 
         "ecofriendly", "sustainable"])
+
+
+@app.route('/approve/<int:id>', methods=['POST'])
+def approve(id):
+    if request.method=='POST':
+        store = Store.query.filter_by(store_id=id).first()
+        store.approved = True
+        db.session.commit()
+        return redirect(url_for('homepage'))
+
+@app.route('/approved')
+def approved_stores():
+    approved_stores = Store.query.filter_by(approved=True).order_by(Store.created_at).all()
+    return render_template('approved_stores.html', stores=approved_stores)
