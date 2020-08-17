@@ -1,0 +1,29 @@
+.header{
+
+    display: flex;
+    justify-self: space-between;
+    margin-bottom: 30px;
+
+    .options{
+        margin: 0 auto;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .option{
+        font-size: 20px;
+        padding: 10px 50px;
+        cursor: pointer;
+    }
+
+    .option:hover{
+        text-decoration-line: overline underline;
+        color: #99bbff; 
+    }
+
+
+
+}

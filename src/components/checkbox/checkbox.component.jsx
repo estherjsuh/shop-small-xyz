@@ -6,7 +6,7 @@ const Checkbox = ({ label, isSelected, onCheckboxChange }) => (
  
   <div className="form-check">
    
-    <label for={label}> {label} </label>
+
 
       <input 
         type="checkbox"
@@ -16,8 +16,9 @@ const Checkbox = ({ label, isSelected, onCheckboxChange }) => (
         checked={isSelected}
         onChange={onCheckboxChange}
       />
-      
-  </div>
+    
+      <label for={label}> {label} </label>
+     </div>
 );
 
 export default Checkbox;
