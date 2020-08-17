@@ -1,5 +1,5 @@
 import time
-from flask import Flask, redirect, url_for, request, jsonify
+from flask import Flask, redirect, url_for, request, jsonify, render_template
 from flask_cors import CORS
 import datetime
 from flask_sqlalchemy import SQLAlchemy 
@@ -23,22 +23,10 @@ def get_current_time():
 def api_post():
     if request.method == 'POST':
         req = request.json
-        return jsonify(req)
-        # db.session.add(jsonify(req))
-        # db.session.commit()
         new_store = Store(req['ownerName'], req['email'], req['shopName'], req['website'], req['nearestLocation'], req['msgFromOwner'], req['categories']['women'], req['categories']['men'], req['categories']['unisex'], req['categories']['kids'], req['categories']['home'], req['categories']['self-care & wellness'], req['categories']['beauty'], req['categories']['jewelry'], req['categories']['shoes'], req['categories']['masks'], req['categories']['accessories'], req['categories']['undergarments'], req['categories']['vintage'], req['categories']['fair-trade'], req['categories']['eco-friendly'], req['categories']['sustainable'], req['prices']['$ - $0-50'], req['prices']['$$ - $50-100'], req['prices']['$$$ - $100-150'], req['prices']['$$$$ - $150+'])
         db.session.add(new_store)
         db.session.commit()
-    # else:
-    #     a = request.args.get('ownerName', '')
-    #     return a
-
-# class Store(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     json_column = db.Column(JSON)
-
-#     def __init__(json_data):
-#         self.json_column = json_data
+        return jsonify(req)
 
 
 
@@ -104,3 +92,10 @@ class Store(db.Model):
         self.twoDollar = twoDollar 
         self.threeDollar = threeDollar 
         self.fourDollar = fourDollar
+
+@app.route('/pending')
+def pending_stores():
+    all_stores = Store.query.filter_by(approved=False).order_by(Store.created_at).all()
+    return render_template('pending_stores.html', stores=all_stores, categories =["women", "men", "unisex", "kids", "home", "selfcare_wellness", "beauty", "jewelry", "shoes", "masks", 
+            "accessories", "undergarments", "vintage", "fairtrade", 
+        "ecofriendly", "sustainable"])
