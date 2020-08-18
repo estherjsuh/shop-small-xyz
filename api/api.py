@@ -8,6 +8,7 @@ from config import DATABASE_URI, SCREENSHOT_KEY
 import requests
 import urllib
 import urllib.parse
+import os
 
 
 app = Flask(__name__)
@@ -147,4 +148,6 @@ def call_screenshot_api(url, customer_key, store_id):
     opener.addheaders = [('User-agent', '-')]
     urllib.request.install_opener(opener)
     output = str(store_id) + ".png"
-    urllib.request.urlretrieve(api_url, output)
+    path = '/Users/esther/Desktop/react-flask-app/api/static'
+    fullfilename = os.path.join(path, output)
+    urllib.request.urlretrieve(api_url, fullfilename)
