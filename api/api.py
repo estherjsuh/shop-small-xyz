@@ -39,7 +39,7 @@ def api_post():
         new_store = Store(req['ownerName'], req['email'], req['shopName'], clean_url(req['website']), req['nearestLocation'], req['msgFromOwner'], req['categories']['women'], req['categories']['men'], req['categories']['unisex'], req['categories']['kids'], req['categories']['home'], req['categories']['self-care & wellness'], req['categories']['beauty'], req['categories']['jewelry'], req['categories']['shoes'], req['categories']['masks'], req['categories']['bags & accessories'], req['categories']['undergarments'], req['categories']['vintage'], req['categories']['fair-trade'], req['categories']['eco-friendly'], req['categories']['sustainable'], req['prices']['$ - $0-50'], req['prices']['$$ - $50-100'], req['prices']['$$$ - $100-150'], req['prices']['$$$$ - $150+'])
         db.session.add(new_store)
         db.session.commit()
-        return jsonify(req)
+        return redirect(url_for('pending_stores'))
 
 #removes https:// or http://
 def clean_url(url):
@@ -148,7 +148,7 @@ def approve(id):
         store_id = store.store_id
         call_screenshot_api(url, customer_key, store_id)
 
-        return redirect(url_for('homepage'))
+        return redirect(url_for('approved_stores'))
 
 def call_screenshot_api(url, customer_key, store_id):
     cleansed_url = "https://www." + '.'.join(url.split('.')[-2:])
@@ -179,8 +179,7 @@ def decline(id):
         store.declined = True 
         db.session.commit() 
 
-        return redirect(url_for('declined_stores'))
-
+        return redirect(url_for('pending_stores'))
 
 
 @app.route('/delete/<int:id>', methods=['POST'])
@@ -189,3 +188,4 @@ def delete(id):
     if request.method =='POST':
         db.session.delete(store)
         db.session.commit()
+        return redirect(url_for('declined_stores'))
