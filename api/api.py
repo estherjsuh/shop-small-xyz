@@ -4,7 +4,11 @@ from flask_cors import CORS
 import datetime
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy.dialects.postgresql import JSON
-from config import DATABASE_URI
+from config import DATABASE_URI, SCREENSHOT_KEY
+import requests
+import urllib
+import urllib.parse
+
 
 app = Flask(__name__)
 CORS(app)
@@ -13,6 +17,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
+
+customer_key = SCREENSHOT_KEY
 
 
 @app.route('/time')
@@ -103,9 +109,7 @@ class Store(db.Model):
 @app.route('/pending')
 def pending_stores():
     all_stores = Store.query.filter_by(approved=False).order_by(Store.created_at).all()
-    return render_template('pending_stores.html', stores=all_stores, categories =["women", "men", "unisex", "kids", "home", "selfcare_wellness", "beauty", "jewelry", "shoes", "masks", 
-            "accessories", "undergarments", "vintage", "fairtrade", 
-        "ecofriendly", "sustainable"])
+    return render_template('pending_stores.html', stores=all_stores, categories =["women", "men", "unisex", "kids", "home", "selfcare_wellness", "beauty", "jewelry", "shoes", "masks", "accessories", "undergarments", "vintage", "fairtrade", "ecofriendly", "sustainable"])
 
 
 @app.route('/approve/<int:id>', methods=['POST'])
@@ -114,9 +118,33 @@ def approve(id):
         store = Store.query.filter_by(store_id=id).first()
         store.approved = True
         db.session.commit()
+
+        url = store.website
+        store_id = store.store_id
+        call_screenshot_api(url, customer_key, store_id)
+
         return redirect(url_for('homepage'))
 
 @app.route('/approved')
 def approved_stores():
     approved_stores = Store.query.filter_by(approved=True).order_by(Store.created_at).all()
     return render_template('approved_stores.html', stores=approved_stores)
+
+
+def call_screenshot_api(url, customer_key, store_id):
+    cleansed_url = "https://www." + '.'.join(url.split('.')[-2:])
+    options = {
+        'key': customer_key,
+        'url': cleansed_url,
+        'dimension': '520x440',
+        'device' : 'desktop',
+        'cacheLimit': 0,
+        'delay': 200,
+        'zoom': 100
+    }
+    api_url = "https://api.screenshotmachine.com?{}".format(urllib.parse.urlencode(options))
+    opener = urllib.request.build_opener() 
+    opener.addheaders = [('User-agent', '-')]
+    urllib.request.install_opener(opener)
+    output = str(store_id) + ".png"
+    urllib.request.urlretrieve(api_url, output)

@@ -21,39 +21,37 @@
     </thead>
     <tbody>
       {% for store in stores %}
+    
       <tr>
         <td>{{ store.ownerName.title() }}</td>
         <td>{{ store.email.lower() }}</td>
         <td>{{ store.shopName.title() }} </td>
         <td>{{ store.website.lower() }} </td>
         <td>{{ store.nearestLocation.title() }} </td>
-        <td>{{ store.shopName.title() }} </td>
         <td>{{ store.msgFromOwner.lower() }} </td>
-       
+
         <!-- <td>
-        {% for cat in categories %}
-            {% if store.cat %}
+        {% for store in stores %}
+            {% for cat in categories %}
+                 {% if store.cat %}
                 <li>{{cat}}</li> 
             {% endif %}
-         {% endfor %}
+            {% endfor %}
+        {% endfor %}
         </td> -->
         <td>{{"women" if store.women else "", "men" if store.men else "", "unisex" if store.unisex else "", "kids" if store.kids else "", "home" if store.home else "", "selfcare&wellness" if store.selfcare_wellness else "", "beauty" if store.beauty else "", "jewelry" if store.jewelry else "", "shoes" if store.shoes else "", "masks" if store.masks else "", 
             "accessories" if store.accessories else "", "undergarments" if store.undergarments else "", "vintage" if store.vintage else "", "fairtrade" if store.fairtrade else "", 
         "ecofriendly" if store.ecofriendly else "", "sustainable" if store.sustainable else ""}}</td>
       
-   <td>
-            {{"$" if store.oneDollar else "", "$$" if store.twoDollar else "", "$$$" if store.threeDollar, "$$$$" if store.fourDollar }}
-        </td>
-
         <td>
-        <form action="{{url_for('approve', id=store.store_id)}}" method="post">
-            <input type="submit" value="Approve" class="btn btn-success"> </form><td>
-        <!-- <td><a href="approved" class="btn btn-default pull-left">Approve</a> </td>
-        <td><a href="declined" class="btn btn-default pull-right">Decline</a> </td> -->
-    {% endfor %}
+            {{"$" if store.oneDollar else "", "$$" if store.twoDollar else "", "$$$" if store.threeDollar, "$$$$" if store.fourDollar }}
+        </td> 
+
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
 
 {% endblock content %}
+
