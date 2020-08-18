@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
 
-    <h2>Pending Stores </h2>
+    <h2>Declined Stores </h2>
 
   <table class="table table-borderless">
     <thead>
@@ -21,6 +21,7 @@
     </thead>
     <tbody>
       {% for store in stores %}
+    
       <tr>
         <td>{{ store.ownerName.title() }}</td>
         <td>{{ store.email.lower() }}</td>
@@ -28,13 +29,15 @@
         <td>{{ store.website.lower() }} </td>
         <td>{{ store.nearestLocation.title() }} </td>
         <td>{{ store.msgFromOwner.lower() }} </td>
-       
+
         <!-- <td>
-        {% for cat in categories %}
-            {% if store.cat %}
+        {% for store in stores %}
+            {% for cat in categories %}
+                 {% if store.cat %}
                 <li>{{cat}}</li> 
             {% endif %}
-         {% endfor %}
+            {% endfor %}
+        {% endfor %}
         </td> -->
         <td>{{"women" if store.women else "", "men" if store.men else "", "unisex" if store.unisex else "", "kids" if store.kids else "", "home" if store.home else "", "selfcare&wellness" if store.selfcare_wellness else "", "beauty" if store.beauty else "", "jewelry" if store.jewelry else "", "shoes" if store.shoes else "", "masks" if store.masks else "", 
             "accessories" if store.accessories else "", "undergarments" if store.undergarments else "", "vintage" if store.vintage else "", "fairtrade" if store.fairtrade else "", 
@@ -42,22 +45,16 @@
       
         <td>
             {{"$" if store.oneDollar else "", "$$" if store.twoDollar else "", "$$$" if store.threeDollar, "$$$$" if store.fourDollar }}
-        </td>
-
+        </td> 
         <td>
-        <form action="{{url_for('approve', id=store.store_id)}}" method="post">
-            <input type="submit" value="Approve" class="btn btn-success"> </form>
+            <form action="{{url_for('delete', id=store.store_id)}}" method="post">
+                <input type="submit" value="Delete" class="btn btn-danger"> </form>
         </td>
-
-        <td>
-        <form action="{{url_for('decline', id=store.store_id)}}" method="post">
-            <input type="submit" value="Decline" class="btn btn-danger"> </form>
-        </td>
-
-    {% endfor %}
-    </tr>
+      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
 
 {% endblock content %}
+
