@@ -1,6 +1,8 @@
 import time
 from flask import Flask, redirect, url_for, request, jsonify, render_template, flash
 from flask_cors import CORS
+from flask_serialize import FlaskSerializeMixin
+
 import datetime
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy.dialects.postgresql import JSON
@@ -18,6 +20,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
+FlaskSerializeMixin.db = db
 
 customer_key = SCREENSHOT_KEY
 app.secret_key = SECRET_KEY
@@ -53,7 +56,7 @@ def clean_url(url):
         return url
     
 
-class Store(db.Model):
+class Store(FlaskSerializeMixin, db.Model):
 
     __tablename__ = 'stores'
 
@@ -189,3 +192,7 @@ def delete(id):
         db.session.delete(store)
         db.session.commit()
         return redirect(url_for('declined_stores'))
+
+@app.route('/get_stores_all', methods=['GET'])
+def get_stores_all():
+    return Store.get_delete_put_post(prop_filters={'approved':True})
