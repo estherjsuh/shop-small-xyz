@@ -43,7 +43,12 @@
 
 
     input[type=submit]{
-display: block;
-margin: 0 auto;    }
+        display: block;
+        margin: 0 auto;    }
+
+    span{
+        font-style: italic;
+        font-size: 13px;
+    }
 
 }

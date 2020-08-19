@@ -160,7 +160,7 @@ class JoinUs extends React.Component {
                 <select value= {this.state.nearestLocation} onChange={this.handleChange} name="nearestLocation" required>
                     <option value="" disabled selected>Select nearest location</option>
                     <option value="austin">Austin, TX</option>
-                    <option value="brooklyn">Brooklyn, NY</option>
+                    <option value="chicago"> Chicago, IL</option>
                     <option value="los-angeles">Los Angeles, CA</option>
                     <option value="new-york">New York, NY</option>
                     <option value="portland">Portland, OR</option>
@@ -175,7 +175,7 @@ class JoinUs extends React.Component {
                     <textarea
                     value={this.state.msgFromOwner}
                     name="msgFromOwner"
-                    placeholder="i.e. a mission statement or what your shop is all about"
+                    placeholder="i.e. tell us what your shop is all about"
                     maxLength="150"
                     onChange={this.handleChange}
                     />
