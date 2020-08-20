@@ -2,15 +2,16 @@ import time
 from flask import Flask, redirect, url_for, request, jsonify, render_template, flash
 from flask_cors import CORS
 from flask_serialize import FlaskSerializeMixin
-
 import datetime
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy.dialects.postgresql import JSON
-from config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY
+from config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY, S3_KEY, S3_SECRET, S3_BUCKET, S3_PREFIX
 import requests
 import urllib
 import urllib.parse
 import os
+import boto3
+from botocore.exceptions import ClientError
 
 
 app = Flask(__name__)
@@ -21,9 +22,17 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 FlaskSerializeMixin.db = db
-
-customer_key = SCREENSHOT_KEY
 app.secret_key = SECRET_KEY
+
+
+#screenshot saver api
+customer_key = SCREENSHOT_KEY
+
+#s3 bucket 
+s3_client = boto3.client('s3',
+    aws_access_key_id=S3_KEY, 
+    aws_secret_access_key=S3_SECRET 
+    )
 
 
 @app.route('/time')
@@ -165,14 +174,19 @@ def call_screenshot_api(url, customer_key, store_id):
         'zoom': 100
     }
 
-    api_url = "https://api.screenshotmachine.com?{}".format(urllib.parse.urlencode(params))
+    screenshot_url = "https://api.screenshotmachine.com?{}".format(urllib.parse.urlencode(params))
     opener = urllib.request.build_opener() 
     opener.addheaders = [('User-agent', '-')]
     urllib.request.install_opener(opener)
     output = str(store_id) + ".png"
     path = '/Users/esther/Desktop/react-flask-app/api/static'
     fullfilename = os.path.join(path, output)
-    urllib.request.urlretrieve(api_url, fullfilename)
+    urllib.request.urlretrieve(screenshot_url, fullfilename)
+
+    # s3_client = boto3.client('s3')
+    s3_client.upload_file(fullfilename, S3_BUCKET, output)
+    return "image saved"
+
 
 
 @app.route('/decline/<int:id>', methods=['POST'])
@@ -193,6 +207,8 @@ def delete(id):
         db.session.commit()
         return redirect(url_for('declined_stores'))
 
+
+#send this to react
 @app.route('/get_stores_all', methods=['GET'])
 def get_stores_all():
     return Store.get_delete_put_post(prop_filters={'approved':True})
