@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
+import { waitForElementToBeRemoved } from '@testing-library/react';
 
 
 const Shop = () => {
@@ -11,16 +12,25 @@ const Shop = () => {
             // (data=> console.log(data))
                 (data => setInitialData(data))
     }, []);
-    
-return(
-    <div className= 'stores'>
-        <h2>{initialData[0].shopName}</h2>
-        <div className='screenshotContainer'>
-            <a href={initialData[0].website} target="_blank">{initialData[0].website}</a>
-        </div>
-    </div>
-    );
-}
 
+
+
+return (
+    <div>
+        {initialData.map((element, index) => 
+
+                <div className='storeContainer'>
+                    <h2>{element.shopName}</h2>
+                    <p>{element.website}</p>
+                    <div className='imgContainer'>
+                        <img src={`https://shopsmall-bucket.s3-us-west-1.amazonaws.com/${element.store_id}.png`}/>
+
+                    </div>
+
+                </div>
+        )}
+    </div>   
+    )
+}
 
 export default Shop;

@@ -11,7 +11,6 @@ import urllib
 import urllib.parse
 import os
 import boto3
-from botocore.exceptions import ClientError
 
 
 app = Flask(__name__)
@@ -173,7 +172,6 @@ def call_screenshot_api(url, customer_key, store_id):
         'delay': 200,
         'zoom': 100
     }
-
     screenshot_url = "https://api.screenshotmachine.com?{}".format(urllib.parse.urlencode(params))
     opener = urllib.request.build_opener() 
     opener.addheaders = [('User-agent', '-')]
@@ -182,9 +180,7 @@ def call_screenshot_api(url, customer_key, store_id):
     path = '/Users/esther/Desktop/react-flask-app/api/static'
     fullfilename = os.path.join(path, output)
     urllib.request.urlretrieve(screenshot_url, fullfilename)
-
-    # s3_client = boto3.client('s3')
-    s3_client.upload_file(fullfilename, S3_BUCKET, output)
+    s3_client.upload_file(fullfilename, S3_BUCKET, output, ExtraArgs={'ContentType':'image/jpeg'})
     return "image saved"
 
 
