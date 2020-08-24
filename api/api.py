@@ -34,9 +34,9 @@ s3_client = boto3.client('s3',
     )
 
 
-@app.route('/time')
-def get_current_time():
-    return {'time': time.time()}
+# @app.route('/time')
+# def get_current_time():
+#     return {'time': time.time()}
 
 
 @app.route('/')
@@ -47,7 +47,7 @@ def homepage():
 def api_post():
     if request.method == 'POST':
         req = request.json
-        new_store = Store(req['ownerName'], req['email'], req['shopName'], clean_url(req['website']), req['nearestLocation'], req['msgFromOwner'], req['categories']['women'], req['categories']['men'], req['categories']['unisex'], req['categories']['kids'], req['categories']['home'], req['categories']['self-care & wellness'], req['categories']['beauty'], req['categories']['jewelry'], req['categories']['shoes'], req['categories']['masks'], req['categories']['bags & accessories'], req['categories']['undergarments'], req['categories']['vintage'], req['categories']['fair-trade'], req['categories']['eco-friendly'], req['categories']['sustainable'], req['prices']['$ - $0-50'], req['prices']['$$ - $50-100'], req['prices']['$$$ - $100-150'], req['prices']['$$$$ - $150+'])
+        new_store = Store(req['ownerName'], req['email'], req['shopName'].title(), clean_url(req['website']), req['nearestLocation'], req['msgFromOwner'], req['categories']['women'], req['categories']['men'], req['categories']['unisex'], req['categories']['kids'], req['categories']['home'], req['categories']['self-care & wellness'], req['categories']['beauty'], req['categories']['jewelry'], req['categories']['shoes'], req['categories']['masks'], req['categories']['bags & accessories'], req['categories']['undergarments'], req['categories']['vintage'], req['categories']['fair-trade'], req['categories']['eco-friendly'], req['categories']['sustainable'], req['prices']['$ - $0-50'], req['prices']['$$ - $50-100'], req['prices']['$$$ - $100-150'], req['prices']['$$$$ - $150+'])
         db.session.add(new_store)
         db.session.commit()
         return redirect(url_for('pending_stores'))

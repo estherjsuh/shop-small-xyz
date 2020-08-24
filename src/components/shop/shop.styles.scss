@@ -1,0 +1,21 @@
+.storeContainer{
+    display: inline-block;
+    grid-gap: 20px;
+    padding: 5px;
+    
+    h2{
+        text-align: center;
+    }
+
+    .imgContainer{
+        cursor: pointer;
+        border-radius: 5px;
+        border: 2px solid grey;
+
+    }
+
+    .imgContainer:hover{
+        opacity: .5;
+    }
+
+}
