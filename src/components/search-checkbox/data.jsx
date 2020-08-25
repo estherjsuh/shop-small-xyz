@@ -79,4 +79,29 @@ const prices = [
 ]
 
 
-export {categories, prices}
+
+const cities = [
+    {"_id":"austin",
+    "name": "Austin"},
+
+    {"_id":"chicago",
+        "name": "Chicago"},
+
+    {"_id":"los-angeles",
+        "name": "Los Angeles"},
+    
+    {"_id":"new-york",
+        "name": "New York"},      
+
+    {"_id":"portland",
+        "name": "Portland"}, 
+
+    {"_id":"san-fran",
+        "name": "San Francisco"}, 
+    
+    {"_id":"seattle",
+        "name": "Seattle"}, 
+    
+]
+
+export {categories, prices, cities}

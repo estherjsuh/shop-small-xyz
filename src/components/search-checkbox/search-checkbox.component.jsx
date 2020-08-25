@@ -4,8 +4,7 @@ import { Checkbox, Collapse } from 'antd'
 
 import './search-checkboxes.styles.scss'
 
-const { Panel } = Collapse
-
+const Panel = Collapse.Panel;
 
 const SearchCheckBox= (props) => {
 
@@ -26,6 +25,7 @@ const SearchCheckBox= (props) => {
 
     }
 
+
     const renderCheckboxLists = () => props.list && props.list.map((value, index) => (
         <React.Fragment key={index}>
 
@@ -35,15 +35,15 @@ const SearchCheckBox= (props) => {
                 type="checkbox"
                 checked={Checked.indexOf(value._id) === -1 ? false : true}
             />
-            <span>{value.name}</span>
+            <label>{value.name}</label>
         </div>
         </React.Fragment>
     ))
 
     return (
         <div>
-            <Collapse defaultActiveKey={['0']}>
-                <Panel header="Categories">
+            <Collapse className="collapse">
+                <Panel key="1" style={{width:'30%'}}>
                     {renderCheckboxLists()}
                 </Panel>
             </Collapse>
