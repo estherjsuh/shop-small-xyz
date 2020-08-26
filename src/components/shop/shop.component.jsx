@@ -46,6 +46,22 @@ const Shop = () => {
         const filterResults = initialData.filter(object => filters['categories'].some(key => object[key]) && filters['prices'].some(key => object[key]));
             setFiltered(filterResults)
         }
+
+        // else if (filters.cities.length>0){
+        //     const filterResults = initialData.filter(object => {
+        //         return filters.cities.includes(object.nearestLocation);
+        //     }) 
+        //     setFiltered(filterResults)
+        // }
+
+        else 
+        if (filters.categories.length > 0 && filters.prices.length >0 && filters.cities.length>0) 
+        {
+    
+        const filterResults = initialData.filter(object => {return filters['categories'].some(key => object[key]) && filters['prices'].some(key => object[key]) && filters['cities'].includes(object.nearestLocation) 
+            });
+            setFiltered(filterResults)
+        }
     
     }, [filters, initialData]);
 
@@ -83,32 +99,31 @@ return (
             list = {categories}
             handleFilters={filters=> handleFilters(filters, "categories")}
         />
-
          <SearchCheckBox
             list = {prices}
             handleFilters={filters=> handleFilters(filters, "prices")}
         />
-
         <SearchCheckBox
             list = {cities}
             handleFilters={filters=> handleFilters(filters, "cities")}
         />
-
         </div>
-        {filtered.map((element, index) => 
 
-            <div className='storeContainer'>
-                <h2>{element.shopName}</h2>
-                <p>{element.website}</p>
+        <div className='storeContainer'>
+
+            {filtered.map((element, index) => 
+
                 <div className='imgContainer'>
-                    <img src={`https://shopsmall-bucket.s3-us-west-1.amazonaws.com/${element.store_id}.png`}/>
-
-                </div>
-
-            </div>
-        )}
+                    <div className='image'
+                    style= {{ backgroundImage: `url(https://shopsmall-bucket.s3-us-west-1.amazonaws.com/${element.store_id}.png)`}}> 
+                    </div>
+                
+                
+             </div>
+            )}
+        </div>
     </div>   
     )
-        }
+    }
 
 export default Shop;
