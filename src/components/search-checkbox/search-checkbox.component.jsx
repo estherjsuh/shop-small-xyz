@@ -1,18 +1,19 @@
 
 import React, { useState } from 'react'
 import { Checkbox, Collapse } from 'antd'
-
+// import Example from '../dropdown/dropdown.component';
 import './search-checkboxes.styles.scss'
 
 const Panel = Collapse.Panel;
 
 const SearchCheckBox= (props) => {
 
-    const [Checked, setChecked] = useState([])
+    const [checked, setChecked] = useState([])
+    // const [open, setOpen] = useState(false)
 
     const handleToggle = (value) => {
-        const currentIndex = Checked.indexOf(value);
-        const newChecked = [...Checked];
+        const currentIndex = checked.indexOf(value);
+        const newChecked = [...checked];
 
         if (currentIndex === -1) {
             newChecked.push(value)
@@ -25,7 +26,6 @@ const SearchCheckBox= (props) => {
 
     }
 
-
     const renderCheckboxLists = () => props.list && props.list.map((value, index) => (
         <React.Fragment key={index}>
 
@@ -33,7 +33,7 @@ const SearchCheckBox= (props) => {
             <Checkbox
                 onChange={() => handleToggle(value._id)}
                 type="checkbox"
-                checked={Checked.indexOf(value._id) === -1 ? false : true}
+                checked={checked.indexOf(value._id) === -1 ? false : true}
             />
             <label>{value.name}</label>
         </div>
@@ -43,10 +43,14 @@ const SearchCheckBox= (props) => {
     return (
         <div>
             <Collapse className="collapse">
-                <Panel key="1" style={{width:'30%'}}>
+                <Panel key="1" header={props.title} >
                     {renderCheckboxLists()}
                 </Panel>
             </Collapse>
+
+            {/* <Example  title={props.title}>
+                {renderCheckboxLists()}
+            </Example> */}
         </div>
     )
 }

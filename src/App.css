@@ -13,3 +13,8 @@ a{
 ::selection{
   background: linen;
 }
+
+
+ul {
+  list-style: none;
+}
