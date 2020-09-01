@@ -181,9 +181,14 @@ def call_screenshot_api(url, customer_key, store_id):
     fullfilename = os.path.join(path, output)
     urllib.request.urlretrieve(screenshot_url, fullfilename)
     s3_client.upload_file(fullfilename, S3_BUCKET, output, ExtraArgs={'ContentType':'image/jpeg'})
+
+
+    check_s3(store_id)
+
     return "image saved"
 
-
+# def check_s3_delete_static(store_id):
+#     if 
 
 @app.route('/decline/<int:id>', methods=['POST'])
 def decline(id):

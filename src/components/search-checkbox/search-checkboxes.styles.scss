@@ -1,8 +1,16 @@
+// .categories{
+//     margin-left: 10px;
+
+// span{
+//     padding-left: 5px;
+// }
+
+// }
+
+
 .categories{
-    margin-left: 10px;
-
-span{
-    padding-left: 5px;
-}
-
+    label:hover{
+        cursor: pointer;
+        background-color: linen;
+    }
 }

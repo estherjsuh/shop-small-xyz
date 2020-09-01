@@ -5,8 +5,6 @@ import './checkbox.styles.scss'
 const Checkbox = ({ label, isSelected, onCheckboxChange }) => (
  
   <div className="form-check">
-   
-
 
       <input 
         type="checkbox"
