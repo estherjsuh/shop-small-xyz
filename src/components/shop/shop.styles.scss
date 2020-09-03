@@ -1,8 +1,7 @@
 .shopPage{
 
     margin: 10px;
-    .searchBoxes{
-    }
+
 
     .storeContainer{
         display: grid;
@@ -17,12 +16,16 @@
     }
 
     .imgContainer{
-        width: 400px;
+        width: 300px;
         display: flex;
         flex-direction: column;
-        height: 350px;
+        height: 250px;
         align-items: center;
         position: relative;
+
+        p{
+            font-size: 18px;
+        }
 
         .image {
             width: 100%;
@@ -55,10 +58,11 @@
 
 
     .navbar-nav{
-
-         max-width: 100%;
+        cursor: pointer;
+        max-width: 100%;
        height: 100%;
         display:flex;
         justify-content: center;
+        background: white;
     }
 }

@@ -1,54 +1,52 @@
-import React, { useState } from "react";
-// import MultiSelect from "react-multi-select-component";
+import React, { useState, useEffect, useRef } from "react";
+import './dropdown.styles.scss'
+import useClickOutside from '../../hooks/outsideAlerter'
 
-import SearchBox
+const Menu = (props) => {
 
-// const Example = (props) => {
-  
-// const options = props.list;  
+ const [visible, setVisible] = useState(false)
 
-//   const [selected, setSelected] = useState([]);
+let domNode = useClickOutside(() => {
+  setVisible(false);
+});
 
-//   const handleSelect = (value) => {
-//       const currentIndex = selected.indexOf(selected.value);
-//       const newChecked = [...selected];
+  const handleClick=() =>{
+    setVisible(!visible)
+  }
 
-//       if (currentIndex === -1) {
-//           newChecked.push(value)
-//       } else {
-//           newChecked.splice(currentIndex, 1)
-//       }
+  useEffect(() => {
+   let handler = (event) => {
+      if (!domNode.current.contains(event.target)){
+      setVisible(false);
+      }
+    }
+    document.addEventListener("mousedown", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    }
+  });
 
-//       setSelected(newChecked)
-//       props.handleFilters(newChecked)
-// }  
-//   return (
+  return(
+ 
+  <div ref={domNode} className='dropdown'>
 
-//     <div>
-//       <MultiSelect
-//         hideSelectedOptions={true}
-//         hasSelectAll = {false}
-//         // selected={selected}
-//         // selected={selected.indexOf(selected.value) === -1 ? false : true}
-//         value ={selected}
-//         options={options}
-//         // onChange={value => handleSelect({value})}
 
-//         onChange={setSelected}
-//         disableSearch={true}
-//         labelledBy={"Select"}
-//         overrideStrings = 
-//           {{ "selectSomeItems" : "Categories",
-//           "allItemsAreSelected": "Categories",
-//         }}
-//       />
-//     </div>
-//   );
-// };
+    <button className='dropdownName' onClick={handleClick}
+    // onClick={()=> setOpen(!open)}
+      >
+        {props.title } &#9661;
 
-const Example = (props) => {
-  <div className='dropdown'>
+    </button>
 
+  <div className='dropdownContents'>
+
+    
+    {visible ? props.children  : null}
+    
   </div>
+</div>
+  )
 
-export default Example;
+}
+
+export default Menu;

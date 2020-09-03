@@ -5,6 +5,8 @@ import './shop.styles.scss';
 import SearchCheckBox from '../search-checkbox/search-checkbox.component';
 import { categories, prices, cities } from '../search-checkbox/data';
 
+import Menu from '../dropdown/dropdown.component';
+
 
 const Navbar = (props) => {
     return (
@@ -32,8 +34,7 @@ const Shop = () => {
             .then
             (data => setInitialData(data))
     }, []);
-console.log('inittt==>>>', initialData)
-console.log('filllll==>>>', filters)
+
 
     useEffect(() => {
 
@@ -70,29 +71,43 @@ console.log('filllll==>>>', filters)
 
     return (
         <div className="shopPage">
-            <div className="searchBoxes">
-                <Navbar>
-                    <SearchCheckBox
+                {/* <Navbar> */}
+                    {/* <SearchCheckBox
                         list={categories}
                         handleFilters={filters => handleFilters(filters, "categories")}
                         title="categories"
-                    />
+                    /> */}
+
+                    <Menu title="categories">
+                        <SearchCheckBox
+                            list={categories}
+                            handleFilters={filters => handleFilters(filters, "categories")}
+                            title="categories"
+                        />
+                    </Menu>
+                    <Menu title="prices">
                     <SearchCheckBox
                         list={prices}
                         handleFilters={filters => handleFilters(filters, "prices")}
                         title="prices"
                     />
+                    </Menu>
+                    <Menu title="cities">
                     <SearchCheckBox
                         list={cities}
                         handleFilters={filters => handleFilters(filters, "cities")}
                         title="cities"
                     />
-                </Navbar>
-            </div>
+                    </Menu>
+                {/* </Navbar> */}
+
 
             <div className='storeContainer'>
+        
                 {filtered.map((element, index) =>
+                   
                     <div className='imgContainer'>
+                        <p className='storeName'>{element.shopName}</p>
                         <div className='image'
                             style={{ backgroundImage: `url(https://shopsmall-bucket.s3-us-west-1.amazonaws.com/${element.store_id}.png)` }}> </div>
                     </div>
