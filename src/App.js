@@ -18,6 +18,7 @@ render(){
     <div>
       <Header/>
         <Switch>
+        <Route exact path='/' component={Shop}/>
           <Route exact path='/joinus' component= {JoinUs}/>
           <Route exact path='/about' component={About}/>
           <Route exact path='/shop' component={Shop}/>

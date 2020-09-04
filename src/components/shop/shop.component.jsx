@@ -8,16 +8,6 @@ import { categories, prices, cities } from '../search-checkbox/data';
 import Menu from '../dropdown/dropdown.component';
 
 
-const Navbar = (props) => {
-    return (
-        <nav className="navbar">
-            <ul className="navbar-nav">
-                {props.children}
-            </ul>
-        </nav>
-    );
-}
-
 const Shop = () => {
     const [initialData, setInitialData] = useState([{}])
     const [filtered, setFiltered] = useState([{}])
@@ -25,7 +15,6 @@ const Shop = () => {
         categories: [],
         prices: [],
         cities: []
-
     })
 
     useEffect(() => {
@@ -37,7 +26,6 @@ const Shop = () => {
 
 
     useEffect(() => {
-
         if (Object.values(filters).every(a => a.length === 0)) {
             setFiltered(initialData)
         }
@@ -49,15 +37,12 @@ const Shop = () => {
 
                 const citiesFilters = filters.cities.length ? filters.cities.includes(object.nearestLocation) : true;
 
-                // console.log('yoo==>>>', categoriesFilters, 'ppp===>>',pricesFilters, 'ccc==>>', citiesFilters )
-
                 return categoriesFilters && pricesFilters && citiesFilters
             });
             setFiltered(newData)
         }
-
-
     }, [filters, initialData]);
+
 
 
 
@@ -65,54 +50,49 @@ const Shop = () => {
         const newFilters = { ...filters }
         newFilters[category] = f
         setFilters(newFilters)
-        console.log(filters)
+        console.log(newFilters)
     }
 
 
     return (
         <div className="shopPage">
-                {/* <Navbar> */}
-                    {/* <SearchCheckBox
-                        list={categories}
-                        handleFilters={filters => handleFilters(filters, "categories")}
-                        title="categories"
-                    /> */}
-
+            <div className="search">
                     <Menu title="categories">
                         <SearchCheckBox
                             list={categories}
+                            checked ={filters.categories}
                             handleFilters={filters => handleFilters(filters, "categories")}
-                            title="categories"
                         />
                     </Menu>
                     <Menu title="prices">
                     <SearchCheckBox
                         list={prices}
+                        checked={filters.prices}
                         handleFilters={filters => handleFilters(filters, "prices")}
-                        title="prices"
                     />
                     </Menu>
                     <Menu title="cities">
                     <SearchCheckBox
                         list={cities}
+                        checked={filters.cities}
                         handleFilters={filters => handleFilters(filters, "cities")}
-                        title="cities"
                     />
                     </Menu>
-                {/* </Navbar> */}
-
-
+            </div>
+        <div className='stores'>
             <div className='storeContainer'>
         
                 {filtered.map((element, index) =>
                    
                     <div className='imgContainer'>
-                        <p className='storeName'>{element.shopName}</p>
+                       
                         <div className='image'
                             style={{ backgroundImage: `url(https://shopsmall-bucket.s3-us-west-1.amazonaws.com/${element.store_id}.png)` }}> </div>
+                         <p className='storeName'>{element.shopName}</p>
                     </div>
                 )}
             </div>
+        </div>
         </div>
     )
 }

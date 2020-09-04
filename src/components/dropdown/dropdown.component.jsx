@@ -4,7 +4,7 @@ import useClickOutside from '../../hooks/outsideAlerter'
 
 const Menu = (props) => {
 
- const [visible, setVisible] = useState(false)
+const [visible, setVisible] = useState(false)
 
 let domNode = useClickOutside(() => {
   setVisible(false);
@@ -13,18 +13,6 @@ let domNode = useClickOutside(() => {
   const handleClick=() =>{
     setVisible(!visible)
   }
-
-  useEffect(() => {
-   let handler = (event) => {
-      if (!domNode.current.contains(event.target)){
-      setVisible(false);
-      }
-    }
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    }
-  });
 
   return(
  
@@ -41,7 +29,7 @@ let domNode = useClickOutside(() => {
   <div className='dropdownContents'>
 
     
-    {visible ? props.children  : null}
+    {visible ? props.children : null}
     
   </div>
 </div>
