@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import './dropdown.styles.scss'
 import useClickOutside from '../../hooks/outsideAlerter'
 
@@ -19,22 +19,15 @@ let domNode = useClickOutside(() => {
   <div ref={domNode} className='dropdown'>
 
 
-    <button className='dropdownName' onClick={handleClick}
-    // onClick={()=> setOpen(!open)}
-      >
+    <button className='dropdownName' onClick={handleClick}>
         {props.title } &#9661;
-
     </button>
 
   <div className='dropdownContents'>
-
-    
-    {visible ? props.children : null}
-    
+      {visible ? props.children : null}
   </div>
+
 </div>
   )
-
 }
-
 export default Menu;

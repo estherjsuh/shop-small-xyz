@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React from 'react'
 import { Checkbox } from 'antd'
 
 import './search-checkboxes.styles.scss'
@@ -10,7 +10,6 @@ const SearchCheckBox= (props) => {
     const handleToggle = (value) => {
         const currentIndex = props.checked.indexOf(value);
         const newChecked = [...props.checked];
-
         if (currentIndex === -1) {
             newChecked.push(value)
         } else {
@@ -23,7 +22,7 @@ const SearchCheckBox= (props) => {
     const renderCheckboxLists = () => props.list && props.list.map((value, index) => (
         <React.Fragment key={index}>
 
-        <div className = "categories">
+        <div className = "filters">
             <Checkbox
                 onChange={() => handleToggle(value._id)}
                 type="checkbox"

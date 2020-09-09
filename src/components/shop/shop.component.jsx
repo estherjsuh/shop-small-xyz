@@ -44,7 +44,7 @@ const Shop = () => {
     }, [filters, initialData]);
 
 
-
+    console.log(initialData);
 
     const handleFilters = (f, category) => {
         const newFilters = { ...filters }
@@ -84,11 +84,12 @@ const Shop = () => {
         
                 {filtered.map((element, index) =>
                    
-                    <div className='imgContainer'>
-                       
+                    <div className='imgContainer' 
+                    onClick={ () => window.open(`${element.website}`, "_blank")}
+                    >
                         <div className='image'
                             style={{ backgroundImage: `url(https://shopsmall-bucket.s3-us-west-1.amazonaws.com/${element.store_id}.png)` }}> </div>
-                         <p className='storeName'>{element.shopName}</p>
+                         <p className='storeName' onClick={ () => window.open(`${element.website}`, "_blank")}>{element.shopName}</p>
                     </div>
                 )}
             </div>
