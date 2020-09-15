@@ -1,9 +1,17 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import ReactDOM from "react-dom";
 import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 
-test('renders join us', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText('Have a shop? Join Us!');
-  expect(linkElement).toBeInTheDocument();
-});
+
+it("renders without crashing", () => {
+  const div = document.createElement("div");
+  ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+div
+  );
+  ReactDOM.unmountComponentAtNode(div);
+})

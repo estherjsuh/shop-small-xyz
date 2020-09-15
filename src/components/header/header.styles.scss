@@ -1,22 +1,56 @@
 .header{
+    // position: fixed;
+    height: 56px;
+    width: 100%;
+    top:0;
+    left:0;
+    // background-color: linen;
 
-    display: flex;
-    justify-self: space-between;
-    margin-bottom: 30px;
+    // margin-top: 5%;
+    // display: flex;
+    // justify-self: space-between;
+    // margin-bottom: 30px;
+    .header_nav{
+  
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 1rem;
+        // @media screen and (min-width: 769px){
+        //     DrawerToggleButton: none;
+        // }
+        }
+
+    
+    .logo-container{
+        margin-left: 1rem;
+        font-size: 1.5rem;
+        @media screen and (min-width: 769px){
+            margin-left: 0;
+        }
+    }
+
+    .spacer{
+        flex: 1;
+    }
 
     .options{
-        margin: 0 auto;
+        margin: 0;
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        padding: 0 1rem;
+        @media screen and (max-width: 768px){
+            display: none;
+       }
     }
 
 
     .option{
-        font-size: 20px;
-        padding: 10px 50px;
-        cursor: pointer;
+        display: flex;
+        font-size: 1.2rem;
+        padding: 0px 2rem;
+        // cursor: pointer;
     }
 
     .option:hover{
@@ -24,6 +58,9 @@
         color: #99bbff; 
     }
 
-
-
 }
+
+
+
+
+
