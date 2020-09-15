@@ -1,6 +1,8 @@
-html{
+html {
   height: 100%;
 }
+
+
 
 body {
   margin: 0;
@@ -17,3 +19,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+* {
+  box-sizing: border-box;
+ }

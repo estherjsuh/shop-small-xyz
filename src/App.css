@@ -1,17 +1,22 @@
 
-
 body{
   min-height: 100vh;
   margin: 0;
   position: relative;
   background-color: #e6f2ff;
   font-family:"Source Code Pro";
+  color: dimgrey;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
 
 a{
   text-decoration: none;
-  color: black;
+  color: dimgrey;
 }
 
 ::selection{

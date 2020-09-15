@@ -4,10 +4,10 @@ import './footer.styles.scss'
 const Footer = () => {
 
 return (
-    <div className="footer">
+    <footer className="footer">
         <p>Contact Us</p>
 
-    </div>
+    </footer>
 )
 
 }
