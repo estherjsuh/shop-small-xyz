@@ -11,6 +11,7 @@ import About from './components/about/about.component';
 import Shop from './components/shop/shop.component';
 import Footer from './components/footer/footer.component';
 import Contact from './components/contact/contact.component';
+import ThankYou from './components/thankyou/thankyou.component';
 
 class App extends React.Component {
   state = {
@@ -46,6 +47,7 @@ render(){
           <Route exact path='/about' component={About}/>
           <Route exact path='/shop' component={Shop}/>
           <Route exact path='/contact' component={Contact}/>
+          <Route exact path='/thankyou' component={ThankYou}/>
 
         </Switch>
       <Footer/>

@@ -1,6 +1,7 @@
 import React from "react";
 
 import Checkbox from "../checkbox/checkbox.component";
+// import {useHistory} from 'react-router-dom';
 
 
 import './form-joinus.styles.scss';
@@ -35,12 +36,13 @@ class JoinUs extends React.Component {
         this.handleSelectPrices = this.handleSelectPrices.bind(this);
     }
 
+
     handleChange(event){
         this.setState({[event.target.name]: event.target.value});
     }
 
     handleSubmit(event){
-        //event.preventDefault();
+        event.preventDefault();
 
         fetch('http://localhost:5000/results', {
             method: 'POST',
@@ -52,9 +54,9 @@ class JoinUs extends React.Component {
             console.log(response)
             return response.json();
         });
+        
 
-        event.preventDefault();
-        //console.log(this.state);
+        
     }
 
     handleSelect(event) {
