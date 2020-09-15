@@ -16,18 +16,26 @@
         align-items: center;
         height: 100%;
         padding: 0 1rem;
-        // @media screen and (min-width: 769px){
-        //     DrawerToggleButton: none;
-        // }
+
         }
 
     
     .logo-container{
         margin-left: 1rem;
         font-size: 1.5rem;
+       
+        text-decoration: underline;
+        text-decoration-color: tan;
+        text-decoration-style: wavy;
+        text-decoration-thickness: .1em;
+
         @media screen and (min-width: 769px){
             margin-left: 0;
         }
+    }
+
+    .logo-container:hover{
+       font-weight: bold;
     }
 
     .spacer{

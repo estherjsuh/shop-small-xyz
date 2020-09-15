@@ -11,13 +11,14 @@
         display: none;
     }
 
-    p{
-        text-align: center;
-        margin: 0;
+    .footer-item{
+        display: flex;
         cursor: pointer;
+        margin: 0;
+        justify-content: center;
     }
 
-    p:hover{
+    .footer-item:hover{
         text-decoration-line: overline underline;
         color: #99bbff; 
     }

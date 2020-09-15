@@ -5,7 +5,8 @@ body{
   position: relative;
   background-color: #e6f2ff;
   font-family:"Source Code Pro";
-  color: dimgrey;
+  color: rgb(120, 120, 120)
+  ;
 }
 
 *,
@@ -16,7 +17,8 @@ body{
 
 a{
   text-decoration: none;
-  color: dimgrey;
+  color: rgb(120, 120, 120)
+  ;
 }
 
 ::selection{

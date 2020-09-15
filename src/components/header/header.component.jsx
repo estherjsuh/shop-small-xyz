@@ -12,7 +12,7 @@ const Header = props => (
                 <DrawerToggleButton click={props.drawerClickHandler}/>
             </div>
             <Link className='logo-container' to="/">
-                 THE LOGO
+                 shop small
             </Link>
 
         <div className="spacer"/>

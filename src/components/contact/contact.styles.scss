@@ -1,0 +1,24 @@
+.contact{
+    padding: 10%;
+    margin-top: 20px;
+    width: 65vw;
+    margin: 0 auto;
+    cursor: pointer;
+    justify-items: center;
+
+    .email-icon{
+        width: 15%;
+        display: block;
+        margin: auto;
+    }
+
+    p{
+        font-size: 4vw;
+        text-align: center;
+
+    }
+}
+
+.contact:hover{
+    background-color: blanchedalmond;
+}

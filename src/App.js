@@ -10,6 +10,7 @@ import JoinUs from './components/joinus/form-joinus.component';
 import About from './components/about/about.component';
 import Shop from './components/shop/shop.component';
 import Footer from './components/footer/footer.component';
+import Contact from './components/contact/contact.component';
 
 class App extends React.Component {
   state = {
@@ -44,6 +45,7 @@ render(){
           <Route exact path='/joinus' component= {JoinUs}/>
           <Route exact path='/about' component={About}/>
           <Route exact path='/shop' component={Shop}/>
+          <Route exact path='/contact' component={Contact}/>
 
         </Switch>
       <Footer/>

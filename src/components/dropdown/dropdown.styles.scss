@@ -1,8 +1,9 @@
 .dropdown{
-
+    margin-left: 3%;
     display: inline-block;
-    
 
+    @media screen and (max-width: 768px){
+        display: block;}
 
 
 button{
@@ -12,11 +13,13 @@ button{
 .dropdownName{
     border: 1.5px solid lightgrey;
     background-color: mintcream;
-    padding: 5px;
+    padding: .15rem;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1rem;
     display: inline-block;
     margin: auto 10px;
+    color:  rgb(60, 60, 60);
+    border-radius: 4px;
     
       
 }
@@ -28,12 +31,11 @@ button{
     .dropdownContents{
         position: absolute; 
         overflow:auto;
-       background-color: whitesmoke;
+        background-color: whitesmoke;
+        border-radius: 4px;
         z-index: 1;
         margin: auto 10px;
+        color: rgb(60, 60, 60);
     }
-
-
-
 
 }

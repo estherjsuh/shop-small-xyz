@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import './footer.styles.scss'
 
 const Footer = () => {
 
 return (
     <footer className="footer">
-        <p>Contact Us</p>
+        <Link className="footer-item" to='/contact'> CONTACT US</Link>
 
     </footer>
 )
