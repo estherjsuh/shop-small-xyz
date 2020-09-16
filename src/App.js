@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+// import { Switch, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import Header from './components/header/header.component';
@@ -24,7 +25,7 @@ class App extends React.Component {
     });
   };
 
-  backdropClickHandler = () => {
+ backdropClickHandler = () => {
     this.setState({sideDrawerOpen: false});
 
   };
@@ -42,13 +43,12 @@ render(){
       <SideDrawer show={this.state.sideDrawerOpen}/>
       {backDrop}
         <Switch>
-        <Route exact path='/' component={Shop}/>
+          <Route exact path='/' component={Shop}/>
           <Route exact path='/joinus' component= {JoinUs}/>
           <Route exact path='/about' component={About}/>
           <Route exact path='/shop' component={Shop}/>
           <Route exact path='/contact' component={Contact}/>
           <Route exact path='/thankyou' component={ThankYou}/>
-
         </Switch>
       <Footer/>
 
