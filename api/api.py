@@ -61,7 +61,6 @@ def api_post():
 
         db.session.add(new_store)
         db.session.commit()
-        print(req['shopName'])
 
         msg = Message("New Request", recipients=[app.config['MAIL_USERNAME']])
         msg.body = "You have received a new request from shop name: {}, with contact <{}>.".format(req['shopName'], req['email'])
@@ -186,6 +185,12 @@ def approve(id):
         url = store.website
         store_id = store.store_id
         call_screenshot_api(url, customer_key, store_id)
+
+        #email store owner
+        recipient = [store.email]
+        msg = Message("Approved!", recipients=recipient)
+        msg.body = "Your store has been approved. Come check it out at www.shop-small.xyz"
+        mail.send(msg)
 
         return redirect(url_for('approved_stores'))
 
