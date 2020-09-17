@@ -3,9 +3,10 @@ from flask import Flask, redirect, url_for, request, jsonify, render_template, f
 from flask_cors import CORS
 from flask_serialize import FlaskSerializeMixin
 import datetime
+from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy.dialects.postgresql import JSON
-from config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY, S3_KEY, S3_SECRET, S3_BUCKET, S3_PREFIX
+from config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY, S3_KEY, S3_SECRET, S3_BUCKET, S3_PREFIX, MAIL_SERVER, MAIL_USERNAME, MAIL_DEFAULT_SENDER, MAIL_PASSWORD
 import requests
 import urllib
 import urllib.parse
@@ -16,8 +17,17 @@ import boto3
 app = Flask(__name__)
 CORS(app)
 
+
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+app.config['MAIL_SERVER'] = MAIL_SERVER
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = MAIL_USERNAME
+app.config['MAIL_DEFAULT_SENDER'] = MAIL_DEFAULT_SENDER
+app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
+mail = Mail(app)
 
 db = SQLAlchemy(app)
 FlaskSerializeMixin.db = db
@@ -48,9 +58,27 @@ def api_post():
     if request.method == 'POST':
         req = request.json
         new_store = Store(req['ownerName'], req['email'], req['shopName'].title(), clean_url(req['website']), req['nearestLocation'], req['msgFromOwner'], req['categories']['women'], req['categories']['men'], req['categories']['unisex'], req['categories']['kids'], req['categories']['home'], req['categories']['self-care & wellness'], req['categories']['beauty'], req['categories']['jewelry'], req['categories']['shoes'], req['categories']['masks'], req['categories']['bags & accessories'], req['categories']['undergarments'], req['categories']['vintage'], req['categories']['fair-trade'], req['categories']['eco-friendly'], req['categories']['sustainable'], req['prices']['$ - $0-50'], req['prices']['$$ - $50-100'], req['prices']['$$$ - $100-150'], req['prices']['$$$$ - $150+'])
+
         db.session.add(new_store)
         db.session.commit()
+        print(req['shopName'])
+
+        msg = Message("New Request", recipients=[app.config['MAIL_USERNAME']])
+        msg.body = "You have received a new request from shop name: {}, with contact <{}>.".format(req['shopName'], req['email'])
+        mail.send(msg)
+
         return redirect(url_for('pending_stores'))
+
+
+# def send_message():
+#     msg = Message("Test",
+#             sender="hello@shop-small.xyz",
+#             recipients ="hello@shop-small.xyz")
+#     msg.body = "testing"
+#     mail.send(msg)
+    
+
+
 
 #removes https:// or http://
 def clean_url(url):
@@ -185,8 +213,7 @@ def call_screenshot_api(url, customer_key, store_id):
 
     return "image saved"
 
-# def check_s3_delete_static(store_id):
-#     if 
+
 
 @app.route('/decline/<int:id>', methods=['POST'])
 def decline(id):
@@ -194,7 +221,6 @@ def decline(id):
         store = Store.query.filter_by(store_id=id).first()
         store.declined = True 
         db.session.commit() 
-
         return redirect(url_for('pending_stores'))
 
 
