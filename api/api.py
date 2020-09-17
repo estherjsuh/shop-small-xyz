@@ -12,6 +12,7 @@ import urllib
 import urllib.parse
 import os
 import boto3
+import time
 
 
 app = Flask(__name__)
@@ -200,9 +201,22 @@ def call_screenshot_api(url, customer_key, store_id):
     fullfilename = os.path.join(path, output)
     urllib.request.urlretrieve(screenshot_url, fullfilename)
     s3_client.upload_file(fullfilename, S3_BUCKET, output, ExtraArgs={'ContentType':'image/jpeg', 'ACL':'public-read'})
-    # check_s3(store_id)
+
+    time.sleep(10)
+
+    check_s3_remove_static(output)
 
     return "image saved"
+
+def check_s3_remove_static(output):
+    for key in s3_client.list_objects_v2(Bucket=S3_BUCKET)['Contents']:
+        if key['Key'] == output:
+            path = '/Users/esther/Desktop/react-flask-app/api/static'
+            fullfilename = os.path.join(path, output)
+            os.remove(fullfilename)
+            print("static file removed")
+        else:
+            print("file does not exist in s3")
 
 
 
