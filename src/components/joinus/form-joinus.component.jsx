@@ -51,7 +51,7 @@ class JoinUs extends React.Component {
             body: JSON.stringify(this.state)
           };
     
-          const response = await fetch('http://localhost:5000/results', requestData);
+          const response = await fetch('http://localhost:5000/api/results', requestData);
         
           this.props.history.push('/thankyou');
         
@@ -162,8 +162,8 @@ class JoinUs extends React.Component {
                 <label>
                     Nearest Location
                     </label>
-                <select value= {this.state.nearestLocation} onChange={this.handleChange} name="nearestLocation" required>
-                    <option value="" disabled selected>Select nearest location</option>
+                <select defaultValue= {this.state.nearestLocation} onChange={this.handleChange} name="nearestLocation" required>
+                    <option value="" disabled>Select nearest location</option>
                     <option value="austin">Austin, TX</option>
                     <option value="chicago"> Chicago, IL</option>
                     <option value="los-angeles">Los Angeles, CA</option>

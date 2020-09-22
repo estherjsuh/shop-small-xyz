@@ -14,8 +14,10 @@ const Checkbox = ({ label, isSelected, onCheckboxChange }) => (
         checked={isSelected}
         onChange={onCheckboxChange}
       />
+
+
     
-      <label for={label}> {label} </label>
+      <label htmlFor={label}> {label} </label>
      </div>
 );
 

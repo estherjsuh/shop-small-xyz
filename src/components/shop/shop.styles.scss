@@ -2,7 +2,6 @@
     display: flex;   
     flex-direction: column;
     margin-top: 5%;
-    margin-bottom: 35px;
 
     .search{
        float: left;
@@ -10,13 +9,15 @@
 
     .stores{
     margin-top: 5%;
-
+    
     .storeContainer{      
         width: 90%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 1.5%;
+        grid-gap: 2%;
         margin: 0 auto;
+        margin-bottom: 100px;
+        
 
         @media screen and (max-width: 768px){
             grid-template-columns: 1fr;
@@ -30,6 +31,7 @@
         flex-direction: column;
         height: 25vw;
         position: relative;
+        
 
         @media screen and (max-width: 768px){
             width: 80vw;
@@ -38,27 +40,31 @@
 
 
         p{
-            font-size: 18px;
-            width: 100%;
+            font-size: 1.2rem;
+            // width: 100%;
             margin: 0;
-            padding: 5px;
-            background-color: whitesmoke;
+            padding: 10px;
+            // background-color: whitesmoke;
             text-align: center;
             border-radius: 5px;
             cursor: pointer;
+            // font-weight: bold;
+            color: rgb(60, 60, 60)
 
         }
 
         p:hover{
             font-weight: bold;
+            text-decoration: line-through;
         }
 
         .image {
-            width: 100%;
-            height: 95%;
+            margin: 0 auto;
+            width: 90%;
+            height: 90%;
             background-size: cover;
             background-position: center;
-            border-radius: 5px;
+            border-radius: 25%;
           }
 
     }

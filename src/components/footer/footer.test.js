@@ -19,3 +19,4 @@ test.each(links)(
         expect(linkDom).toHaveAttribute("href", link.location);
     }
 );
+

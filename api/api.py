@@ -44,11 +44,11 @@ s3_client = boto3.client('s3',
     )
 
 
-@app.route('/')
+@app.route('/api')
 def homepage():
     return render_template('homepage.html')
 
-@app.route('/results', methods=['POST'])
+@app.route('/api/results', methods=['POST'])
 def api_post():
     if request.method == 'POST':
         req = request.json
@@ -143,22 +143,22 @@ class Store(FlaskSerializeMixin, db.Model):
         self.threeDollar = threeDollar 
         self.fourDollar = fourDollar
 
-@app.route('/pending')
+@app.route('/api/pending')
 def pending_stores():
     all_stores = Store.query.filter_by(approved=False).filter_by(declined=False).order_by(Store.created_at).all()
     return render_template('pending_stores.html', stores=all_stores, categories =["women", "men", "unisex", "kids", "home", "selfcare_wellness", "beauty", "jewelry", "shoes", "masks", "accessories", "undergarments", "vintage", "fairtrade", "ecofriendly", "sustainable"])
 
-@app.route('/approved')
+@app.route('/api/approved')
 def approved_stores():
     approved_stores = Store.query.filter_by(approved=True).order_by(Store.created_at).all()
     return render_template('approved_stores.html', stores=approved_stores)
 
-@app.route('/declined')
+@app.route('/api/declined')
 def declined_stores():
     declined_stores = Store.query.filter_by(declined=True).order_by(Store.created_at).all()
     return render_template('declined_stores.html', stores=declined_stores)
 
-@app.route('/approve/<int:id>', methods=['POST'])
+@app.route('/api/approve/<int:id>', methods=['POST'])
 def approve(id):
     if request.method=='POST':
         store = Store.query.filter_by(store_id=id).first()
@@ -220,7 +220,7 @@ def check_s3_remove_static(output):
 
 
 
-@app.route('/decline/<int:id>', methods=['POST'])
+@app.route('/api/decline/<int:id>', methods=['POST'])
 def decline(id):
     if request.method=='POST':
         store = Store.query.filter_by(store_id=id).first()
@@ -229,7 +229,7 @@ def decline(id):
         return redirect(url_for('pending_stores'))
 
 
-@app.route('/delete/<int:id>', methods=['POST'])
+@app.route('/api/delete/<int:id>', methods=['POST'])
 def delete(id):
     store = Store.query.filter_by(store_id=id).first()
     if request.method =='POST':
@@ -239,6 +239,6 @@ def delete(id):
 
 
 #send this to react
-@app.route('/get_stores_all', methods=['GET'])
+@app.route('/api/get_stores_all', methods=['GET'])
 def get_stores_all():
     return Store.get_delete_put_post(prop_filters={'approved':True})

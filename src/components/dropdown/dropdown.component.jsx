@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './dropdown.styles.scss'
 import useClickOutside from '../../hooks/outsideAlerter'
 
-const Menu = (props) => {
+const Dropdown = (props) => {
 
 const [visible, setVisible] = useState(false)
 
@@ -15,7 +15,7 @@ let domNode = useClickOutside(() => {
   }
 
   return(
- 
+
   <div ref={domNode} className='dropdown'>
 
 
@@ -30,4 +30,4 @@ let domNode = useClickOutside(() => {
 </div>
   )
 }
-export default Menu;
+export default Dropdown;

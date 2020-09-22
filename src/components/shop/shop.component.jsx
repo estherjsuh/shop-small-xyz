@@ -5,7 +5,7 @@ import './shop.styles.scss';
 import SearchCheckBox from '../search-checkbox/search-checkbox.component';
 import { categories, prices, cities } from '../search-checkbox/data';
 
-import Menu from '../dropdown/dropdown.component';
+import Dropdown from '../dropdown/dropdown.component';
 
 
 const Shop = () => {
@@ -18,7 +18,7 @@ const Shop = () => {
     })
 
     useEffect(() => {
-        fetch('/get_stores_all').then(
+        fetch('/api/get_stores_all').then(
             response => response.json())
             .then
             (data => setInitialData(data))
@@ -44,8 +44,6 @@ const Shop = () => {
     }, [filters, initialData]);
 
 
-    console.log(initialData);
-
     const handleFilters = (f, category) => {
         const newFilters = { ...filters }
         newFilters[category] = f
@@ -57,38 +55,40 @@ const Shop = () => {
     return (
         <div className="shopPage">
             <div className="search">
-                    <Menu title="categories">
+                    <Dropdown title="categories">
                         <SearchCheckBox
                             list={categories}
                             checked ={filters.categories}
                             handleFilters={filters => handleFilters(filters, "categories")}
                         />
-                    </Menu>
-                    <Menu title="prices">
+                    </Dropdown>
+                    <Dropdown title="prices">
                     <SearchCheckBox
                         list={prices}
                         checked={filters.prices}
                         handleFilters={filters => handleFilters(filters, "prices")}
                     />
-                    </Menu>
-                    <Menu title="cities">
+                    </Dropdown>
+                    <Dropdown title="cities">
                     <SearchCheckBox
                         list={cities}
                         checked={filters.cities}
                         handleFilters={filters => handleFilters(filters, "cities")}
                     />
-                    </Menu>
+                    </Dropdown>
             </div>
         <div className='stores'>
             <div className='storeContainer'>
         
                 {filtered.map((element, index) =>
                    
-                    <div className='imgContainer' 
+                    <div className='imgContainer' key={index}
                     onClick={ () => window.open(`${element.website}`, "_blank")}
                     >
-                        <div className='image'
-                            style={{ backgroundImage: `url(https://shopsmall-bucket.s3-us-west-1.amazonaws.com/${element.store_id}.png)` }}> </div>
+                        <div className='image' 
+                            style={{ backgroundImage: `url(https://shopsmall-bucket.s3-us-west-1.amazonaws.com/${element.store_id}.png)` }}> 
+                        </div>
+                            <br/>
                          <p className='storeName' onClick={ () => window.open(`${element.website}`, "_blank")}>{element.shopName}</p>
                     </div>
                 )}
