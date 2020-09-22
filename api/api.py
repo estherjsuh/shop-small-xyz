@@ -14,7 +14,7 @@ import boto3
 import time
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./build', static_url_path='/')
 CORS(app)
 
 
@@ -43,6 +43,10 @@ s3_client = boto3.client('s3',
     aws_secret_access_key=S3_SECRET 
     )
 
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @app.route('/api')
 def homepage():
@@ -242,3 +246,6 @@ def delete(id):
 @app.route('/api/get_stores_all', methods=['GET'])
 def get_stores_all():
     return Store.get_delete_put_post(prop_filters={'approved':True})
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
