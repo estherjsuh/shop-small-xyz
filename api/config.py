@@ -1,6 +1,6 @@
 import os
 
-# DATABASE_URI = os.environ.get('DATABASE_URI')
+DATABASE_URI = os.environ.get('DATABASE_URL')
 
 SCREENSHOT_KEY = os.environ.get('SCREENSHOT_KEY')
 

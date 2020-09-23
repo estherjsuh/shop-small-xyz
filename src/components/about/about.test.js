@@ -9,13 +9,13 @@ describe('<About/>', () => {
         expect(wrapper.find('.heading'));
     });
 
-    it('try snapshot', ()=>{
-        expect(shallow(<About/>)).toMatchSnapshot();
-    })
-
     it('renders 4 `.statement`', () =>{
         const wrapper = shallow(<About/>);
         expect(wrapper.find('.statement').length).toEqual(4);
     });
+
+    it('try snapshot', ()=>{
+        expect(shallow(<About/>)).toMatchSnapshot();
+    })
 
 });

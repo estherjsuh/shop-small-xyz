@@ -1,11 +1,16 @@
 from flask import Flask, redirect, url_for, request, jsonify, render_template, flash
+
 from flask_cors import CORS
+
 from flask_serialize import FlaskSerializeMixin
 import datetime
 from flask_mail import Mail, Message
+
 from flask_sqlalchemy import SQLAlchemy 
-from sqlalchemy.dialects.postgresql import JSON
-from config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY, S3_KEY, S3_SECRET, S3_BUCKET, S3_PREFIX, MAIL_SERVER, MAIL_USERNAME, MAIL_DEFAULT_SENDER, MAIL_PASSWORD
+from .config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY, S3_KEY, S3_SECRET, S3_BUCKET, S3_PREFIX, MAIL_SERVER, MAIL_USERNAME, MAIL_DEFAULT_SENDER, MAIL_PASSWORD
+
+# from .extensions import db, mail, MAIL_USERNAME, s3_client, S3_BUCKET, SCREENSHOT_KEY
+
 import requests
 import urllib
 import urllib.parse
@@ -14,7 +19,9 @@ import boto3
 import time
 
 
-app = Flask(__name__, static_folder='build', static_url_path='')
+# main = Blueprint('main', __name__)
+
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 CORS(app)
 
 
@@ -27,6 +34,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = MAIL_USERNAME
 app.config['MAIL_DEFAULT_SENDER'] = MAIL_DEFAULT_SENDER
 app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
+
 mail = Mail(app)
 
 db = SQLAlchemy(app)
@@ -37,7 +45,7 @@ app.secret_key = SECRET_KEY
 #screenshot saver api
 customer_key = SCREENSHOT_KEY
 
-#s3 bucket 
+# s3 bucket 
 s3_client = boto3.client('s3',
     aws_access_key_id=S3_KEY, 
     aws_secret_access_key=S3_SECRET 
@@ -56,13 +64,14 @@ def homepage():
 def api_post():
     if request.method == 'POST':
         req = request.json
-        print(req)
+        # print(req)
         new_store = Store(req['ownerName'], req['email'], req['shopName'].title(), clean_url(req['website']), req['nearestLocation'], req['msgFromOwner'], req['categories']['women'], req['categories']['men'], req['categories']['unisex'], req['categories']['kids'], req['categories']['home'], req['categories']['self-care & wellness'], req['categories']['beauty'], req['categories']['jewelry'], req['categories']['shoes'], req['categories']['masks'], req['categories']['bags & accessories'], req['categories']['undergarments'], req['categories']['vintage'], req['categories']['fair-trade'], req['categories']['eco-friendly'], req['categories']['sustainable'], req['prices']['$ - $0-50'], req['prices']['$$ - $50-100'], req['prices']['$$$ - $100-150'], req['prices']['$$$$ - $150+'])
 
         db.session.add(new_store)
         db.session.commit()
 
-        msg = Message("New Request", recipients=[app.config['MAIL_USERNAME']])
+        # msg = Message("New Request", recipients=[app.config['MAIL_USERNAME']])
+        msg = Message("New Request", recipients=[MAIL_USERNAME])
         msg.body = "You have received a new request from shop name: {}, with contact <{}>.".format(req['shopName'], req['email'])
         mail.send(msg)
 
@@ -147,6 +156,10 @@ class Store(FlaskSerializeMixin, db.Model):
         self.threeDollar = threeDollar 
         self.fourDollar = fourDollar
 
+
+db.create_all()
+db.session.commit() 
+
 @app.route('/api/pending')
 def pending_stores():
     all_stores = Store.query.filter_by(approved=False).filter_by(declined=False).order_by(Store.created_at).all()
@@ -185,6 +198,9 @@ def approve(id):
 
         return redirect(url_for('approved_stores'))
 
+UPLOAD_FOLDER = os.path.abspath(os.curdir) + '/static/'
+
+
 def call_screenshot_api(url, customer_key, store_id):
     cleansed_url = "https://www." + '.'.join(url.split('.')[-2:])
     params = {
@@ -201,8 +217,9 @@ def call_screenshot_api(url, customer_key, store_id):
     opener.addheaders = [('User-agent', '-')]
     urllib.request.install_opener(opener)
     output = str(store_id) + ".png"
-    path = '/Users/esther/Desktop/react-flask-app/api/static'
-    fullfilename = os.path.join(path, output)
+    # path = '/Users/esther/Desktop/react-flask-app/api/static'
+    # fullfilename = os.path.join(path, output)
+    fullfilename = os.path.join(UPLOAD_FOLDER, output)
     urllib.request.urlretrieve(screenshot_url, fullfilename)
     s3_client.upload_file(fullfilename, S3_BUCKET, output, ExtraArgs={'ContentType':'image/jpeg', 'ACL':'public-read'})
 
@@ -215,8 +232,9 @@ def call_screenshot_api(url, customer_key, store_id):
 def check_s3_remove_static(output):
     for key in s3_client.list_objects_v2(Bucket=S3_BUCKET)['Contents']:
         if key['Key'] == output:
-            path = '/Users/esther/Desktop/react-flask-app/api/static'
-            fullfilename = os.path.join(path, output)
+            # path = '/Users/esther/Desktop/react-flask-app/api/static'
+            # fullfilename = os.path.join(path, output)
+            fullfilename = os.path.join(UPLOAD_FOLDER, output)
             os.remove(fullfilename)
             print("static file removed")
         else:
@@ -230,7 +248,7 @@ def decline(id):
         store = Store.query.filter_by(store_id=id).first()
         store.declined = True 
         db.session.commit() 
-        return redirect(url_for('pending_stores'))
+        return redirect(url_for('main.pending_stores'))
 
 
 @app.route('/api/delete/<int:id>', methods=['POST'])
@@ -246,6 +264,7 @@ def delete(id):
 @app.route('/api/get_stores_all', methods=['GET'])
 def get_stores_all():
     return Store.get_delete_put_post(prop_filters={'approved':True})
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))

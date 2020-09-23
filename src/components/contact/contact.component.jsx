@@ -9,7 +9,7 @@ class Contact extends React.Component{
         this.onClick = this.onClick.bind(this);
     }
 
-    onClick (){
+    onClick(){
         window.location.assign("mailto:hello@shop-small.xyz");
     }
 
