@@ -208,13 +208,13 @@ def call_screenshot_api(url, customer_key, store_id):
     }
     screenshot_url = "https://api.screenshotmachine.com?{}".format(urllib.parse.urlencode(params))
     opener = urllib.request.build_opener() 
-    opener.addheaders = [('User-agent', '-')]
+    opener.addheaders = [('User-agent', 'Mozilla/5.0')]
     urllib.request.install_opener(opener)
     output = str(store_id) + ".png"
     # path = '/Users/esther/Desktop/react-flask-app/api/static'
     # fullfilename = os.path.join(path, output)
     # fullfilename = os.path.join(UPLOAD_FOLDER, output)
-    fullfilename = 'static/'+output
+    fullfilename = "static/" + output
     urllib.request.urlretrieve(screenshot_url, fullfilename)
     s3_client.upload_file(fullfilename, S3_BUCKET, output, ExtraArgs={'ContentType':'image/jpeg', 'ACL':'public-read'})
 
