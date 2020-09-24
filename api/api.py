@@ -191,7 +191,8 @@ def approve(id):
 
         return redirect(url_for('approved_stores'))
 
-UPLOAD_FOLDER = os.path.abspath(os.curdir) + '/static/'
+# UPLOAD_FOLDER = os.path.abspath(os.curdir) + '/static/'
+UPLOAD_FOLDER = '/static/'
 
 
 def call_screenshot_api(url, customer_key, store_id):
