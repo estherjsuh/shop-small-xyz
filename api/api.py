@@ -213,7 +213,8 @@ def call_screenshot_api(url, customer_key, store_id):
     output = str(store_id) + ".png"
     # path = '/Users/esther/Desktop/react-flask-app/api/static'
     # fullfilename = os.path.join(path, output)
-    fullfilename = os.path.join(UPLOAD_FOLDER, output)
+    # fullfilename = os.path.join(UPLOAD_FOLDER, output)
+    fullfilename = 'static/'+output
     urllib.request.urlretrieve(screenshot_url, fullfilename)
     s3_client.upload_file(fullfilename, S3_BUCKET, output, ExtraArgs={'ContentType':'image/jpeg', 'ACL':'public-read'})
 
@@ -228,7 +229,8 @@ def check_s3_remove_static(output):
         if key['Key'] == output:
             # path = '/Users/esther/Desktop/react-flask-app/api/static'
             # fullfilename = os.path.join(path, output)
-            fullfilename = os.path.join(UPLOAD_FOLDER, output)
+            # fullfilename = os.path.join(UPLOAD_FOLDER, output)
+            fullfilename = 'static/'+output
             os.remove(fullfilename)
             print("static file removed")
         else:
