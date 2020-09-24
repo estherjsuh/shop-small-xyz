@@ -51,7 +51,7 @@ class JoinUs extends React.Component {
             body: JSON.stringify(this.state)
           };
     
-          const response = await fetch('http://localhost:5000/api/results', requestData);
+          const response = await fetch('/api/results', requestData);
         
           this.props.history.push('/thankyou');
         

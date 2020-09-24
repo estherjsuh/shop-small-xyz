@@ -1,16 +1,10 @@
 from flask import Flask, redirect, url_for, request, jsonify, render_template, flash
-
 from flask_cors import CORS
-
 from flask_serialize import FlaskSerializeMixin
 import datetime
 from flask_mail import Mail, Message
-
 from flask_sqlalchemy import SQLAlchemy 
 from .config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY, S3_KEY, S3_SECRET, S3_BUCKET, S3_PREFIX, MAIL_SERVER, MAIL_USERNAME, MAIL_DEFAULT_SENDER, MAIL_PASSWORD
-
-# from .extensions import db, mail, MAIL_USERNAME, s3_client, S3_BUCKET, SCREENSHOT_KEY
-
 import requests
 import urllib
 import urllib.parse
@@ -19,7 +13,6 @@ import boto3
 import time
 
 
-# main = Blueprint('main', __name__)
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 CORS(app)
