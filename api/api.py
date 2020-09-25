@@ -4,6 +4,7 @@ from flask_serialize import FlaskSerializeMixin
 import datetime
 from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy 
+from flask_basicauth import BasicAuth
 from .config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY, S3_KEY, S3_SECRET, S3_BUCKET, S3_PREFIX, MAIL_SERVER, MAIL_USERNAME, MAIL_DEFAULT_SENDER, MAIL_PASSWORD
 import requests
 import urllib
@@ -35,6 +36,17 @@ FlaskSerializeMixin.db = db
 app.secret_key = SECRET_KEY
 
 
+
+app.config['BASIC_AUTH_USERNAME'] = 'esther'
+app.config['BASIC_AUTH_PASSWORD'] = 'matrix'
+
+basic_auth = BasicAuth(app)
+
+
+tokens = {
+    "secret-token-1" : "admin"
+}
+
 #screenshot saver api
 customer_key = SCREENSHOT_KEY
 
@@ -53,7 +65,9 @@ def index():
 def not_found(e):
     return app.send_static_file('index.html')
 
+
 @app.route('/api')
+@basic_auth.required
 def homepage():
     return render_template('homepage.html')
 
@@ -154,22 +168,24 @@ class Store(FlaskSerializeMixin, db.Model):
         self.fourDollar = fourDollar
 
 
-# db.create_all()
-# db.session.commit() 
+db.create_all()
+db.session.commit() 
 
 @app.route('/api/pending')
+@basic_auth.required
 def pending_stores():
     all_stores = Store.query.filter_by(approved=False).filter_by(declined=False).order_by(Store.created_at).all()
     return render_template('pending_stores.html', stores=all_stores, categories =["women", "men", "unisex", "kids", "home", "selfcare_wellness", "beauty", "jewelry", "shoes", "masks", "accessories", "undergarments", "vintage", "fairtrade", "ecofriendly", "sustainable"])
 
 
-
 @app.route('/api/approved')
+@basic_auth.required
 def approved_stores():
     approved_stores = Store.query.filter_by(approved=True).order_by(Store.created_at).all()
     return render_template('approved_stores.html', stores=approved_stores)
 
 @app.route('/api/declined')
+@basic_auth.required
 def declined_stores():
     declined_stores = Store.query.filter_by(declined=True).order_by(Store.created_at).all()
     return render_template('declined_stores.html', stores=declined_stores)
