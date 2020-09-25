@@ -154,8 +154,8 @@ class Store(FlaskSerializeMixin, db.Model):
         self.fourDollar = fourDollar
 
 
-db.create_all()
-db.session.commit() 
+# db.create_all()
+# db.session.commit() 
 
 @app.route('/api/pending')
 def pending_stores():
@@ -217,11 +217,13 @@ def call_screenshot_api(url, customer_key, store_id):
     opener.addheaders = [('User-agent', 'Mozilla/5.0')]
     urllib.request.install_opener(opener)
     output = str(store_id) + ".png"
-    # path = '/Users/esther/Desktop/react-flask-app/api/static'
-    # fullfilename = os.path.join(path, output)
     # fullfilename = os.path.join(UPLOAD_FOLDER, output)
     fullfilename = "static/" + output
-    urllib.request.urlretrieve(screenshot_url, fullfilename)
+    try:
+        urllib.request.urlretrieve(screenshot_url, fullfilename)
+    except URLError as e:
+        raise RuntimeError("Failed to download '{}'. '{}'".format(screenshot_url, e.reason))
+    
     s3_client.upload_file(fullfilename, S3_BUCKET, output, ExtraArgs={'ContentType':'image/jpeg', 'ACL':'public-read'})
 
     time.sleep(10)

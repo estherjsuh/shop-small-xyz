@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Switch, Route } from 'react-router-dom';
 import { Route, Switch, withRouter} from 'react-router-dom';
 import './App.css';
 
@@ -45,7 +44,6 @@ render(){
   if (this.state.sideDrawerOpen){
     backDrop = <Backdrop click={this.backdropClickHandler} />;
   }
-  const {location} = this.props;
 
  return (
     <div style={{height: '100%'}}>
