@@ -5,7 +5,7 @@ import datetime
 from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy 
 from flask_basicauth import BasicAuth
-from .config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY, S3_KEY, S3_SECRET, S3_BUCKET, S3_PREFIX, MAIL_SERVER, MAIL_USERNAME, MAIL_DEFAULT_SENDER, MAIL_PASSWORD
+from .config import DATABASE_URI, SCREENSHOT_KEY, SECRET_KEY, S3_KEY, S3_SECRET, S3_BUCKET, S3_PREFIX, MAIL_SERVER, MAIL_USERNAME, MAIL_DEFAULT_SENDER, MAIL_PASSWORD, BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD
 import requests
 import urllib
 import urllib.parse
@@ -29,23 +29,18 @@ app.config['MAIL_USERNAME'] = MAIL_USERNAME
 app.config['MAIL_DEFAULT_SENDER'] = MAIL_DEFAULT_SENDER
 app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
 
+app.config['BASIC_AUTH_USERNAME'] = BASIC_AUTH_USERNAME
+app.config['BASIC_AUTH_PASSWORD'] = BASIC_AUTH_PASSWORD
+
+app.secret_key = SECRET_KEY
+
+
 mail = Mail(app)
 
 db = SQLAlchemy(app)
 FlaskSerializeMixin.db = db
-app.secret_key = SECRET_KEY
-
-
-
-app.config['BASIC_AUTH_USERNAME'] = 'esther'
-app.config['BASIC_AUTH_PASSWORD'] = 'matrix'
 
 basic_auth = BasicAuth(app)
-
-
-tokens = {
-    "secret-token-1" : "admin"
-}
 
 #screenshot saver api
 customer_key = SCREENSHOT_KEY
@@ -237,7 +232,6 @@ def call_screenshot_api(url, customer_key, store_id):
     opener.addheaders = [('User-agent', 'Mozilla/5.0')]
     urllib.request.install_opener(opener)
     output = str(store_id) + ".png"
-    # fullfilename = os.path.join(UPLOAD_FOLDER, output)
     fullfilename = "static/" + output
 
     if os.path.exists('static'):
@@ -246,11 +240,6 @@ def call_screenshot_api(url, customer_key, store_id):
     else:
         os.mkdir('static')
         urllib.request.urlretrieve(screenshot_url, fullfilename)
-
-    # try:
-    #     urllib.request.urlretrieve(screenshot_url, fullfilename)
-    # except URLError as e:
-    #     raise RuntimeError("Failed to download '{}'. '{}'".format(screenshot_url, e.reason))
 
     s3_client.upload_file(fullfilename, S3_BUCKET, output, ExtraArgs={'ContentType':'image/jpeg', 'ACL':'public-read'})
 
@@ -263,9 +252,6 @@ def call_screenshot_api(url, customer_key, store_id):
 def check_s3_remove_static(output):
     for key in s3_client.list_objects_v2(Bucket=S3_BUCKET)['Contents']:
         if key['Key'] == output:
-            # path = '/Users/esther/Desktop/react-flask-app/api/static'
-            # fullfilename = os.path.join(path, output)
-            # fullfilename = os.path.join(UPLOAD_FOLDER, output)
             fullfilename = 'static/'+output
             os.remove(fullfilename)
             print("static file removed")
@@ -294,6 +280,7 @@ def delete(id):
 
 #send this to react
 @app.route('/api/get_stores_all', methods=['GET'])
+@basic_auth.required
 def get_stores_all():
     return Store.get_delete_put_post(prop_filters={'approved':True})
 
