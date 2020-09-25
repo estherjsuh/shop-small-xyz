@@ -252,6 +252,7 @@ def call_screenshot_api(url, customer_key, store_id):
 def check_s3_remove_static(output):
     for key in s3_client.list_objects_v2(Bucket=S3_BUCKET)['Contents']:
         if key['Key'] == output:
+
             fullfilename = 'static/'+output
             os.remove(fullfilename)
             print("static file removed")
@@ -280,7 +281,6 @@ def delete(id):
 
 #send this to react
 @app.route('/api/get_stores_all', methods=['GET'])
-@basic_auth.required
 def get_stores_all():
     return Store.get_delete_put_post(prop_filters={'approved':True})
 
