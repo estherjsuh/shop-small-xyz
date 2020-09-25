@@ -192,7 +192,11 @@ def approve(id):
         #email store owner
         recipient = [store.email]
         msg = Message("Approved!", recipients=recipient)
-        msg.body = "Your store has been approved. Come check it out at www.shop-small.xyz"
+        msg.body = """
+            Your store has been approved 👍
+            Come check it out at www.shop-small.xyz!
+            """
+
         mail.send(msg)
 
         return redirect(url_for('approved_stores'))
