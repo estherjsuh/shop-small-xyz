@@ -224,7 +224,7 @@ def call_screenshot_api(url, customer_key, store_id):
         urllib.request.urlretrieve(screenshot_url, fullfilename)
 
     else:
-        os.mkdir(static)
+        os.mkdir('static')
         urllib.request.urlretrieve(screenshot_url, fullfilename)
 
     # try:
