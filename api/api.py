@@ -219,11 +219,19 @@ def call_screenshot_api(url, customer_key, store_id):
     output = str(store_id) + ".png"
     # fullfilename = os.path.join(UPLOAD_FOLDER, output)
     fullfilename = "static/" + output
-    try:
+
+    if os.path.exists('static'):
         urllib.request.urlretrieve(screenshot_url, fullfilename)
-    except URLError as e:
-        raise RuntimeError("Failed to download '{}'. '{}'".format(screenshot_url, e.reason))
-    
+
+    else:
+        os.mkdir(static)
+        urllib.request.urlretrieve(screenshot_url, fullfilename)
+
+    # try:
+    #     urllib.request.urlretrieve(screenshot_url, fullfilename)
+    # except URLError as e:
+    #     raise RuntimeError("Failed to download '{}'. '{}'".format(screenshot_url, e.reason))
+
     s3_client.upload_file(fullfilename, S3_BUCKET, output, ExtraArgs={'ContentType':'image/jpeg', 'ACL':'public-read'})
 
     time.sleep(10)
