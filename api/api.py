@@ -52,6 +52,13 @@ s3_client = boto3.client('s3',
     )
 
 
+@app.before_request
+def before_request():
+    if request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://',1)
+        code = 301
+        return redirect(url, code=code)
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
