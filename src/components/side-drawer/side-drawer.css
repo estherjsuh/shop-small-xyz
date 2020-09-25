@@ -35,7 +35,7 @@
         }
 
 @media (min-width: 769px){
-    .side-drawer-open{
+    .side-drawer.open{
         display: none;
     }
 }

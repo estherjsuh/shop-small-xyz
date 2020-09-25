@@ -4,14 +4,13 @@ import { Link } from 'react-router-dom';
 
 const SideDrawer = props => {
 
-    let drawerClasses = 'side-drawer';
-    if (props.show){
-        drawerClasses = 'side-drawer open';
-    }
 
     return(
-    <nav className={drawerClasses}>
+    
+    //   <nav className={drawerClasses}>
+    <nav className={props.show ? 'side-drawer open' : 'side-drawer'}>
         <div className="side-nav">
+
             <Link className="side-items" to="/shop">SHOP</Link>
             <Link className="side-items" to="/about">ABOUT</Link>
             <Link className="side-items" to="/joinus">💫 JOIN US !</Link>

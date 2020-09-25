@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Switch, Route } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter} from 'react-router-dom';
 import './App.css';
 
 import Header from './components/header/header.component';
@@ -15,6 +15,7 @@ import Contact from './components/contact/contact.component';
 import ThankYou from './components/thankyou/thankyou.component';
 
 class App extends React.Component {
+
   state = {
     sideDrawerOpen: false
   };
@@ -30,17 +31,26 @@ class App extends React.Component {
 
   };
 
+
+  componentDidUpdate(prevProps) {
+    const {location} = this.props;
+    if (location !== prevProps.location && this.state.sideDrawerOpen) {
+      this.setState({ sideDrawerOpen: false });
+    }
+}
+
 render(){
   let backDrop;
 
   if (this.state.sideDrawerOpen){
     backDrop = <Backdrop click={this.backdropClickHandler} />;
   }
+  const {location} = this.props;
 
  return (
     <div style={{height: '100%'}}>
       <Header drawerClickHandler={this.drawerToggleClickHandler}/>
-      <SideDrawer show={this.state.sideDrawerOpen}/>
+      <SideDrawer show={this.state.sideDrawerOpen} />
       {backDrop}
         <Switch>
           <Route exact path='/' component={Shop}/>
@@ -57,4 +67,4 @@ render(){
   }
 }
 
-export default App;
+export default withRouter(App);

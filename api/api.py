@@ -49,6 +49,10 @@ s3_client = boto3.client('s3',
 def index():
     return app.send_static_file('index.html')
 
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
+
 @app.route('/api')
 def homepage():
     return render_template('homepage.html')
@@ -157,6 +161,8 @@ db.session.commit()
 def pending_stores():
     all_stores = Store.query.filter_by(approved=False).filter_by(declined=False).order_by(Store.created_at).all()
     return render_template('pending_stores.html', stores=all_stores, categories =["women", "men", "unisex", "kids", "home", "selfcare_wellness", "beauty", "jewelry", "shoes", "masks", "accessories", "undergarments", "vintage", "fairtrade", "ecofriendly", "sustainable"])
+
+
 
 @app.route('/api/approved')
 def approved_stores():
