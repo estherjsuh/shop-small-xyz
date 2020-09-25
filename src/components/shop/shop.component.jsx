@@ -83,7 +83,7 @@ const Shop = () => {
                 {filtered.map((element, index) =>
                    
                     <div className='imgContainer' key={index}
-                    onClick={ () => window.open(`${element.website}`, "_blank")}
+                    onClick={ () => window.open(`http://${element.website}`, "_blank")}
                     >
                         <div className='image' 
                             style={{ backgroundImage: `url(https://shopsmall-bucket.s3-us-west-1.amazonaws.com/${element.store_id}.png)` }}> 
