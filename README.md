@@ -1,68 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# shop small
+An interactive small business catalog with responsive design - come check it out: https://www.shop-small.xyz
 
-## Available Scripts
+## I Made This To Learn
+This website has been created to combine my knowledge of Flask and my knowledge of React into an in-depth, full-stack learning opportunity.
 
-In the project directory, you can run:
+## Website Mission
+Preserve & boost small businesses
+Support local communities
+Re-imagine the way we shop, question the way we consume
+Connect customers to the finest, curated shops
 
-### `npm start`
+## Business Requirements
+1. When a store owner submits the form, ability to save form data to database
+2. Ability to notify admin via email when a form has been submitted
+3. Ability to enter admin credentials for backend routes to approve or decline requests
+4. When admin approves a store, ability to call screenshot machine api to capture the homepage of the store's website
+5. Ability to save the screenshot image to AWS S3; ability to confirm that the image has been saved to S3, then remove the screenshot file from the static directory
+6. Ability for shoppers/users to use search facets on the shop page to narrow down on selections
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Testing
+Flask - unittest
+React - Jest + Enzyme
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## How It's Made
+### Backend
+Flask Framework with PostgreSQL database
 
-### `npm test`
+- Flask-Cors: handles Cross Origin Resource Sharing between Flask and React
+- Flask-SQLAlchemy: database models
+- flask-serialize: json serialization to send approved store data to React
+- Flask-Mail: allows email functionality
+- Flask-BasicAuth: protects backend views with prompt for admin credentials
+- urllib3: allows request to screenshot machine
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### Frontend
+React Framework
 
 ### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- App deployed on Heroku
