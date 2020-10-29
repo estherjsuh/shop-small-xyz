@@ -1,6 +1,5 @@
 
 import React from 'react'
-import { Checkbox } from 'antd'
 
 import './search-checkboxes.styles.scss'
 
@@ -20,10 +19,9 @@ const SearchCheckBox= (props) => {
     }
 
     const renderCheckboxLists = () => props.list && props.list.map((value, index) => (
-        <React.Fragment key={index}>
-
-        <div className = "filters">
-            <Checkbox
+        <div key={index}>
+            <div className = "filters">
+            <input
                 onChange={() => handleToggle(value._id)}
                 type="checkbox"
                 id={value.name}
@@ -31,8 +29,8 @@ const SearchCheckBox= (props) => {
             />
         <label for={value.name}>{value.name}</label>
             
+            </div>
         </div>
-        </React.Fragment>
     ))
 
     return (
