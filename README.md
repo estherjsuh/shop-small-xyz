@@ -5,8 +5,7 @@ An interactive small business catalog with responsive design - come check it out
 This website has been created to combine my knowledge of Flask and my knowledge of React into an in-depth, full-stack learning opportunity.
 
 ## Demo
-
-![](<https://media.giphy.com/media/WTFKI0i90mU8pTUsi9/giphy.gif)
+![](https://media.giphy.com/media/WTFKI0i90mU8pTUsi9/giphy.gif)
 
 ## Website Mission
 - Preserve & boost small businesses
