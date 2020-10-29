@@ -13,7 +13,7 @@ const SideDrawer = props => {
 
             <Link className="side-items" to="/shop">SHOP</Link>
             <Link className="side-items" to="/about">ABOUT</Link>
-            <Link className="side-items" to="/joinus">💫 JOIN US !</Link>
+            <Link className="side-items" to="/joinus"><p><span id="img" aria-label="shooting-star">💫</span> JOIN US !</p></Link>
             <Link className="side-items" to="/contact">CONTACT US</Link>
         </div>
     </nav>

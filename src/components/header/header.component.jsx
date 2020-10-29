@@ -20,7 +20,7 @@ const Header = props => (
             <div className='options'>
                 <Link className='option' to='/shop'>SHOP</Link>
                 <Link className='option' to='/about'>ABOUT</Link>
-                <Link className='option' to='/joinus'>💫 JOIN US !</Link>
+                <Link className='option' to='/joinus'> <p><span role="img" aria-label="shooting-star">💫</span> JOIN US !</p></Link>
             </div>
         </nav>
     </header>
