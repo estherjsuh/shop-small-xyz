@@ -7,6 +7,8 @@ This website has been created to combine my knowledge of Flask and my knowledge 
 ## Demo
 ![](https://media.giphy.com/media/WTFKI0i90mU8pTUsi9/giphy.gif)
 
+![](https://media.giphy.com/media/2ZpQWgjvmCfeg1aV0r/giphy.gif)
+
 ## Website Mission
 - Preserve & boost small businesses
 - Support local communities
