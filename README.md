@@ -4,11 +4,15 @@ An interactive small business catalog with responsive design - come check it out
 ## I Made This To Learn
 This website has been created to combine my knowledge of Flask and my knowledge of React into an in-depth, full-stack learning opportunity.
 
+## Demo
+
+![](<https://media.giphy.com/media/WTFKI0i90mU8pTUsi9/giphy.gif)
+
 ## Website Mission
-Preserve & boost small businesses
-Support local communities
-Re-imagine the way we shop, question the way we consume
-Connect customers to the finest, curated shops
+- Preserve & boost small businesses
+- Support local communities
+- Re-imagine the way we shop, question the way we consume
+- Connect customers to the finest, curated shops
 
 ## Business Requirements
 1. When a store owner submits the form, ability to save form data to database
@@ -19,8 +23,8 @@ Connect customers to the finest, curated shops
 6. Ability for shoppers/users to use search facets on the shop page to narrow down on selections
 
 ## Testing
-Flask - unittest
-React - Jest + Enzyme
+- Flask - unittest
+- React - Jest + Enzyme
 
 ## How It's Made
 ### Backend
